@@ -6,6 +6,8 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - 7.0
+  - 7.1
   - hhvm
 
 env:
@@ -41,7 +43,7 @@ before_script:
   - if [[ "$DB" == "pgsql" ]]; then psql -c "create database phpcr_tests;" -U postgres; fi
   - php tests/generate_phpunit_config.php $DB
 
-script: php vendor/bin/phpunit -c $DB.phpunit.xml
+script: php vendor/bin/phpunit -c $DB.phpunit.xml --tap
 
-notifications:
-  irc: "irc.freenode.org#jackalope"
+#notifications:
+#  irc: "irc.freenode.org#jackalope"

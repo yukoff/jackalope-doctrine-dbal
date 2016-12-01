@@ -3,9 +3,8 @@ language: php
 sudo: false
 
 php:
-  - 5.4
-  - 5.5
-  - 5.6
+  - 7.0
+  - 7.1
   - hhvm
 
 env:
@@ -25,11 +24,11 @@ matrix:
     - php: hhvm
     # hhvm will fail until libxml support is added https://github.com/facebook/hhvm/issues/1194
   include:
-    - php: 5.3
+    - php: 5.4
       env: DB=mysql PACKAGE_VERSION=low
-    - php: 5.3
+    - php: 5.4
       env: DB=pgsql PACKAGE_VERSION=low
-    - php: 5.3
+    - php: 5.4
       env: DB=sqlite PACKAGE_VERSION=low
 
 before_script:
@@ -41,7 +40,7 @@ before_script:
   - if [[ "$DB" == "pgsql" ]]; then psql -c "create database phpcr_tests;" -U postgres; fi
   - php tests/generate_phpunit_config.php $DB
 
-script: php vendor/bin/phpunit -c $DB.phpunit.xml
+script: php vendor/bin/phpunit -c $DB.phpunit.xml --tap
 
-notifications:
-  irc: "irc.freenode.org#jackalope"
+#notifications:
+#  irc: "irc.freenode.org#jackalope"
